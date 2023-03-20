@@ -42,6 +42,10 @@ def get_single_movie_cast(movie_id):
     response = requests.get(endpoint, headers=headers)
     return response.json()["cast"]
 
+    if response.status_code != 200:
+        raise Exception(response.json().get("status_message", "An error occurred."))
+    return response.json()["cast"]
+
 
 def get_movies_list(list_type):
     endpoint = f"https://api.themoviedb.org/3/movie/{list_type.strip()}"
